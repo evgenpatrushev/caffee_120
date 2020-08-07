@@ -1,4 +1,5 @@
 import os
+import json
 import string
 import httplib2
 import pandas as pd
@@ -15,6 +16,7 @@ class GoogleSheets:
 
     # Читаем ключи из файла
     if os.getenv('HEROKU'):
+        CREDENTIALS_FILE = json.loads(CREDENTIALS_FILE)
         credentials = \
             ServiceAccountCredentials._from_parsed_json_keyfile(CREDENTIALS_FILE,
                                                                 ['https://www.googleapis.com/auth/spreadsheets',
