@@ -14,9 +14,15 @@ class GoogleSheets:
                                  os.path.join(THIS_FOLDER, 'config/pythonsheetscoffee-285613-c935d679e55c.json'))
 
     # Читаем ключи из файла
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILE,
-                                                                   ['https://www.googleapis.com/auth/spreadsheets',
-                                                                    'https://www.googleapis.com/auth/drive'])
+    if os.getenv('HEROKU'):
+        credentials = \
+            ServiceAccountCredentials._from_parsed_json_keyfile(CREDENTIALS_FILE,
+                                                                ['https://www.googleapis.com/auth/spreadsheets',
+                                                                 'https://www.googleapis.com/auth/drive'])
+    else:
+        credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILE,
+                                                                       ['https://www.googleapis.com/auth/spreadsheets',
+                                                                        'https://www.googleapis.com/auth/drive'])
 
     httpAuth = credentials.authorize(httplib2.Http())  # Авторизуемся в системе
     service = discovery.build('sheets', 'v4', credentials=credentials)
