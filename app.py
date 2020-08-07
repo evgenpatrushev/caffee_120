@@ -8,36 +8,39 @@ from source.forms.registration_form import get_reg_form
 
 import os
 
+
 app = Flask(__name__)
 Mobility(app)  # add mobility check function
 
+# config key and language
 app.secret_key = os.getenv("SECRET_KEY", "jkm-vsnej9l-vm9sqm3:lmve")
 active_lang = 'укр'
 
+# config logger for heroku
+if os.environ.get('HEROKU') is not None:
+    import logging
+    stream_handler = logging.StreamHandler()
+    app.logger.addHandler(stream_handler)
+    app.logger.setLevel(logging.INFO)
+    app.logger.info('server startup')
+
+
+# config google sheets
 google_obj = GoogleSheets()
 # google_obj.add_row([
 #     ['Имя', 'Фамилия', 'Пол', 'День рождения', 'Номер телефона', 'E-mail', 'Дата отправки']
 # ])
 
 
-# app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL",
-#                                                   "postgresql://{}:{}@{}:{}/{}".format(username, password, host, port,
-#                                                                                        database))
-# app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
 def check_for_uniqueness(form):
     return False
-
-
-@app.route('/registration_completed', methods=['GET', 'POST'])
-def registration_completed():
-    return 'registration_completed'
 
 
 @app.route('/change_lang')
 def change_lang():
     global active_lang
     active_lang = request.args.get('lang')
+    app.logger.info(f'Change language: {active_lang}')
     return redirect(url_for('registration'))
 
 
@@ -53,6 +56,7 @@ def registration():
     if request.method == 'POST':
         form.preprocessing()
         if not form.validate() and bool(form.birthday.raw_data[0]):
+            app.logger.warning(f'POST form with error')
             return render_template('registration_form.html', form=form, form_name="Registration", action="",
                                    active=active_lang)
         else:
@@ -69,8 +73,10 @@ def registration():
                  form.telephone_number.data, form.email.data, datetime.now().strftime("%Y-%m-%d %H:%M:%S")]
             ])
 
+            app.logger.info(f'POST form with success')
             return render_template('success.html', active=active_lang)
 
+    app.logger.info(f'GET form')
     return render_template('registration_form.html', form=form, form_name="Registration", action="",
                            active=active_lang)
 
