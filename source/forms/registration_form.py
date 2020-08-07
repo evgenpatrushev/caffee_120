@@ -1,13 +1,12 @@
-from flask_wtf import Form
-from wtforms import StringField, SubmitField, SelectField, HiddenField, DateField
-# from wtforms.fields.html5 import DateField
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, SelectField, DateField
 from wtforms.fields.html5 import EmailField
 from wtforms import validators
 from datetime import datetime
 
 
 def get_reg_form(language):
-    class RegistrationForm(Form):
+    class RegistrationForm(FlaskForm):
         name = StringField("name: ")
         surname = StringField("surname: ")
         telephone_number = StringField("telephone number : ")
