@@ -103,6 +103,7 @@ celerybeat-schedule
 env/
 venv/
 ENV/
+source/google_sheets/config
 env.bak/
 venv.bak/
 .DS_Store
