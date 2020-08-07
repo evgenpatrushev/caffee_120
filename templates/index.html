@@ -4,60 +4,72 @@
     <title>Coffee 120</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {#    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">#}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+{% if request.MOBILE %}
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+{% else %}
+    <nav class="navbar navbar-expand-xl bg-dark navbar-dark">
+{% endif %}
 
-    <div class="navbar-header">
-        <a class="navbar-brand" href="">COFFEE 120</a>  <!-- Посилання на репозиторій з кодом !-->
-    </div>
+
+<div class="navbar-header">
+    <a class="navbar-brand ml-auto" href="">COFFEE 120</a>  <!-- Посилання на репозиторій з кодом !-->
+</div>
 
 
+{% if request.MOBILE %}
+    <div class="collapse navbar w-25" style="font-size: 0.86rem; height: 100px">
+    {#    <div class="navbar w-25" style="font-size: 0.86rem; height: 100px">#}
+{% else %}
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-        <ul class="navbar-nav ml-auto">
+{% endif %}
 
-            {% if active == 'укр' %}
-            <li class="nav-item active">
-            {% else  %}
-            <li class="nav-item">
-            {% endif %}
-                <a class="nav-link" href="/change_lang?lang=укр">Укр</a>
-            </li>
+<ul class="navbar-nav ml-auto">
 
-            {% if active == 'рус' %}
-            <li class="nav-item active">
-            {% else  %}
-            <li class="nav-item">
-            {% endif %}
-                <a class="nav-link" href="/change_lang?lang=рус">Рус</a>
-            </li>
+    {% if active == 'укр' %}
+        <li class="nav-item active">
+            {% else %}
+        <li class="nav-item">
+    {% endif %}
+    <a class="nav-link" href="/change_lang?lang=укр">Укр</a>
+    </li>
 
-            {% if active == 'eng' %}
-            <li class="nav-item active">
-            {% else  %}
-            <li class="nav-item">
-            {% endif %}
-                <a class="nav-link" href="/change_lang?lang=eng">Eng</a>
-            </li>
-        </ul>
-    </div>
+    {% if active == 'рус' %}
+        <li class="nav-item active">
+            {% else %}
+        <li class="nav-item">
+    {% endif %}
+    <a class="nav-link" href="/change_lang?lang=рус">Рус</a>
+    </li>
+
+    {% if active == 'eng' %}
+        <li class="nav-item active">
+            {% else %}
+        <li class="nav-item">
+    {% endif %}
+    <a class="nav-link" href="/change_lang?lang=eng">Eng</a>
+    </li>
+</ul>
+</div>
 </nav>
 
 
 {% if message %}
     <script>
-      alert('{{message}}');
+        alert('{{message}}');
     </script>
 {% endif %}
 
 <div class="container">
 
     {% block content %}<br>
-    <h1>Welcome page</h1>
+        <h1>Welcome page</h1>
     {% endblock %}
 
 </div>

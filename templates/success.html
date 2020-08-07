@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+{% block content %}
+
+    <div class="container">
+        <div class="row col-md-12" style="padding-left: 34px">
+            <div class="col-md-12 text-center">
+                <br><br>
+                <h2 style="color:#0fad00">Success</h2>
+                <br>
+                {% if active == 'укр' %}
+                    <h3>Любий друже</h3>
+                    <p style="font-size:20px;color:#5C5C5C;">Дякуємо за реєстрацію в нашому кафе.</p>
+                {% endif %}
+
+                {% if active == 'рус' %}
+                    <h3>Дорогой друг</h3>
+                    <p style="font-size:20px;color:#5C5C5C;">Спасибо за регистрацию в нашем кафе.</p>
+                {% endif %}
+
+                {% if active == 'eng' %}
+                    <h3>Dear friend </h3>
+                    <p style="font-size:20px;color:#5C5C5C;">Thank you for registration at our cafe.</p>
+                {% endif %}
+
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

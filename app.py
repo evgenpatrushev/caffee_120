@@ -1,15 +1,23 @@
-from flask import Flask, render_template, request, redirect, url_for, session
-from datetime import date
+from flask import Flask, render_template, request, redirect, url_for
+from flask_mobility import Mobility
+
+from source.google_sheets.google_sheets import GoogleSheets
+from datetime import datetime
 
 from source.forms.registration_form import get_reg_form
 
-import json
 import os
 
 app = Flask(__name__)
+Mobility(app)  # add mobility check function
 
 app.secret_key = os.getenv("SECRET_KEY", "jkm-vsnej9l-vm9sqm3:lmve")
 active_lang = 'укр'
+
+google_obj = GoogleSheets()
+# google_obj.add_row([
+#     ['Имя', 'Фамилия', 'Пол', 'День рождения', 'Номер телефона', 'E-mail', 'Дата отправки']
+# ])
 
 
 # app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL",
@@ -44,7 +52,7 @@ def registration():
 
     if request.method == 'POST':
         form.preprocessing()
-        if not form.validate():
+        if not form.validate() and bool(form.birthday.raw_data[0]):
             return render_template('registration_form.html', form=form, form_name="Registration", action="",
                                    active=active_lang)
         else:
@@ -53,9 +61,15 @@ def registration():
                 return render_template('registration_form.html', form=form, form_name="Registration",
                                        action="", msg="error message", active=active_lang)
 
-            # todo add new row for google doc
+            # todo add thread/async
+            gender = {0: 'не выбран', 1: 'Женский', 2: 'Мужской'}
+            birthday = form.birthday.data.strftime("%Y-%m-%d") if form.birthday.data else 'нет информации'
+            google_obj.add_row([
+                [form.name.data, form.surname.data, gender[form.gender.data], birthday,
+                 form.telephone_number.data, form.email.data, datetime.now().strftime("%Y-%m-%d %H:%M:%S")]
+            ])
 
-            return redirect(url_for('registration_completed'))
+            return render_template('success.html', active=active_lang)
 
     return render_template('registration_form.html', form=form, form_name="Registration", action="",
                            active=active_lang)
