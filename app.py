@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mobility import Mobility
 
 from source.google_sheets.google_sheets import GoogleSheets
@@ -8,25 +8,25 @@ from source.forms.registration_form import get_reg_form
 
 import os
 
-
 app = Flask(__name__)
 Mobility(app)  # add mobility check function
 
 # config key and language
 app.secret_key = os.getenv("SECRET_KEY", "jkm-vsnej9l-vm9sqm3:lmve")
-active_lang = 'укр'
 
 # config logger for heroku
 if os.environ.get('HEROKU') is not None:
     import logging
+
     stream_handler = logging.StreamHandler()
     app.logger.addHandler(stream_handler)
     app.logger.setLevel(logging.INFO)
     app.logger.info('server startup')
 
-
 # config google sheets
 google_obj = GoogleSheets()
+
+
 # google_obj.add_row([
 #     ['Имя', 'Фамилия', 'Пол', 'День рождения', 'Номер телефона', 'E-mail', 'Дата отправки']
 # ])
@@ -38,15 +38,19 @@ def check_for_uniqueness(form):
 
 @app.route('/change_lang')
 def change_lang():
-    global active_lang
-    active_lang = request.args.get('lang')
-    app.logger.info(f'Change language: {active_lang}')
+    session['active_lang'] = request.args.get('lang')
+    app.logger.info(f'Change language: {session["active_lang"]}')
     return redirect(url_for('registration'))
 
 
 @app.route('/', methods=['GET', 'POST'])
 def registration():
-    form = get_reg_form(language=active_lang)
+    try:
+        session['active_lang']
+    except:
+        session['active_lang'] = 'укр'
+
+    form = get_reg_form(language=session['active_lang'])
 
     # Warning (костиль) - новый флакс вкл валидацию на InputRequired у клиента (нам так не нада)
     # form.name.flags.required = False
@@ -58,12 +62,12 @@ def registration():
         if not form.validate() and bool(form.birthday.raw_data[0]):
             app.logger.warning(f'POST form with error')
             return render_template('registration_form.html', form=form, form_name="Registration", action="",
-                                   active=active_lang)
+                                   active=session['active_lang'])
         else:
 
             if check_for_uniqueness(form):
                 return render_template('registration_form.html', form=form, form_name="Registration",
-                                       action="", msg="error message", active=active_lang)
+                                       action="", msg="error message", active=session['active_lang'])
 
             # todo add thread/async
             gender = {0: 'не выбран', 1: 'Женский', 2: 'Мужской'}
@@ -74,11 +78,11 @@ def registration():
             ])
 
             app.logger.info(f'POST form with success')
-            return render_template('success.html', active=active_lang)
+            return render_template('success.html', active=session['active_lang'])
 
     app.logger.info(f'GET form')
     return render_template('registration_form.html', form=form, form_name="Registration", action="",
-                           active=active_lang)
+                           active=session['active_lang'])
 
 
 # END DISCIPLINE ORIENTED QUERIES -----------------------------------------------------------------------------------
