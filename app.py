@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
 from flask_mobility import Mobility
 
 from source.google_sheets.google_sheets import GoogleSheets
@@ -9,6 +9,7 @@ from source.forms.registration_form import get_reg_form
 import os
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'source/'
 Mobility(app)  # add mobility check function
 
 # config key and language
@@ -30,6 +31,15 @@ google_obj = GoogleSheets()
 # google_obj.add_row([
 #     ['Имя', 'Фамилия', 'Пол', 'День рождения', 'Номер телефона', 'E-mail', 'Дата отправки']
 # ])
+@app.route('/new')
+def new():
+    return render_template('main.html')
+
+
+@app.route('/menu')
+def menu():
+    # with open('source/120_coffee.pdf', 'rb') as file:
+    return send_from_directory(app.config['UPLOAD_FOLDER'], '120_coffee.pdf')
 
 
 def check_for_uniqueness(form):

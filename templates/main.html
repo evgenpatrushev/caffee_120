@@ -1,0 +1,189 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Coffee 120</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='css/style.css') }}"></script>
+
+
+    <!-- Google fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700,300' rel='stylesheet'>
+
+    <!-- Font Awesome -->
+    {#    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet">#}
+
+    <!-- jQuery Version 1.11.0 -->
+    {#    <script src="js/jquery-1.11.0.js"></script>#}
+    {% if request.MOBILE %}
+
+        <style>
+            .dropdown-menu {
+                background-color: #0000;
+                color: #0000;
+            }
+
+            .dropdown-item {
+                color: white;
+            }
+        </style>
+    {% else %}
+        <style>
+            .bg-dark {
+                background-color: #0000 !important
+            }
+
+            .navbar-dark .navbar-nav .nav-link {
+                color: white
+            }
+        </style>
+    {% endif %}
+
+
+</head>
+<body>
+
+
+<!-- header -->
+<div class="banner">
+
+
+    {% if request.MOBILE %}
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            {#            <a class="navbar-brand" href="/new">COFFEE 120</a>#}
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Language
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/change_lang?lang=укр">Українська</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/change_lang?lang=рус">Руссский</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/change_lang?lang=eng">English</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    {% else %}
+        <nav class="navbar navbar-expand-xl bg-dark navbar-dark">
+
+
+            <div class="navbar-header">
+                <a class="navbar-brand ml-auto" href="/new">COFFEE 120</a>
+            </div>
+
+            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+
+                <ul class="navbar-nav ml-auto">
+
+                    {% if active == 'укр' %}
+                        <li class="nav-item active">
+                            {% else %}
+                        <li class="nav-item">
+                    {% endif %}
+                    <a class="nav-link" href="/change_lang?lang=укр">Укр</a>
+                    </li>
+
+                    {% if active == 'рус' %}
+                        <li class="nav-item active">
+                            {% else %}
+                        <li class="nav-item">
+                    {% endif %}
+                    <a class="nav-link" href="/change_lang?lang=рус">Рус</a>
+                    </li>
+
+                    {% if active == 'eng' %}
+                        <li class="nav-item active">
+                            {% else %}
+                        <li class="nav-item">
+                    {% endif %}
+                    <a class="nav-link" href="/change_lang?lang=eng">Eng</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    {% endif %}
+
+
+    <div class="container">
+
+        {#        <div class="head-nav">#}
+        {#            <span class="menu"></span>#}
+        {#            <ul>#}
+        {#                <li><a href="main.html" class="current">home</a></li>#}
+        {#                <li><a href="our-story.html">registration</a></li>#}
+        {#                <li><a href="menu.html">menu</a></li>#}
+        {#                <li><a href="gallery.html">gallery</a></li>#}
+        {#                <li><a href="news.html">news</a></li>#}
+        {#                <li><a href="contact.html">contact</a></li>#}
+        {#            </ul>#}
+        {#        </div>#}
+        <!-- script-for-nav -->
+        <script>
+            $("span.menu").click(function () {
+                $(".head-nav ul").slideToggle(300, function () {
+                });
+            });
+        </script>
+        <!-- logo -->
+        {% if request.MOBILE %}
+            <div class="logo wow fadeIn">
+                <a href="#">
+                    <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="logo"></a>
+            </div>
+        {% else %}
+            <br><br><br><br><br><br><br>
+        {% endif %}
+        <!-- info -->
+        <div class="banner-info wow fadeIn">
+            <a href="menu.html" class="btn main-btn">Our menu</a>
+            <a href="menu.html" class="btn main-btn">Registration</a>
+            <h1>Coffee, the finest organic suspension ever devised. </h1>
+
+
+            <h2>HOURS:
+                <span>Пн-Пт: 7:00 - 19:00</span>
+                {#                <span>Sat-Sun: 8am - 7pm</span>#}
+                <span>вулиця Іллінська, 8, Київ, 02000</span></h2>
+            {#            <div class="sociallist-home">#}
+            {#                <a href="#"><i class="fa fa-facebook"></i></a>#}
+            {#                <a href="#" class="icon"><i class="fa fa-twitter"></i></a>#}
+            {#                <a href="#" class="icon"><i class="fa fa-instagram"></i></a>#}
+            {#            </div>#}
+        </div>
+    </div>
+</div>
+<!-- /header -->
+
+
+<!-- Core Boostrap JS -->
+{#<script src="js/bootstrap.min.js"></script>#}
+
+<!-- Wow JavaScript -->
+<script src="{{ url_for('static', filename='js/wow.js') }}"></script>
+
+<script>
+    new WOW().init();
+</script>
+
+
+</body>
+</html>
