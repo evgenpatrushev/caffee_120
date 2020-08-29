@@ -129,7 +129,7 @@ a:hover {
 	background-color: #ae895c;
 	color: white;
 	border: 1px solid #ae895c;
-	margin-top: 34px;
+	margin-top: 11px;
 	border-radius: 5px;
 }
 
@@ -145,7 +145,8 @@ a:hover {
 
 
 .banner {
-	background: url(../images/banner.jpg) no-repeat center center fixed;
+	/*background: url(../images/banner.jpg) no-repeat center center fixed;*/
+	background-color: rgb(69, 81, 106);
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -192,7 +193,8 @@ a:hover {
 
 
 .banner-inner {
-	background: url(../images/banner.jpg) no-repeat center center fixed;
+	/*background: url(../images/banner.jpg) no-repeat center center fixed;*/
+	background-color: rgb(69, 81, 106);
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -560,7 +562,8 @@ img.zoom-img:hover {
 @media (max-width:2560px){
 
 .banner {
-	background: url(../images/banner.jpg) no-repeat center center fixed;
+	/*background: url(../images/banner.jpg) no-repeat center center fixed;*/
+	background-color: rgb(69, 81, 106);
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -574,7 +577,8 @@ img.zoom-img:hover {
 @media (max-width:1920px){
 
 .banner {
-	background: url(../images/banner.jpg) no-repeat center center fixed;
+	/*background: url(../images/banner.jpg) no-repeat center center fixed;*/
+	background-color: rgb(69, 81, 106);
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -588,7 +592,8 @@ img.zoom-img:hover {
 @media (max-width:1600px){
 
 .banner {
-	background: url(../images/banner.jpg) no-repeat center center fixed;
+	/*background: url(../images/banner.jpg) no-repeat center center fixed;*/
+	background-color: rgb(69, 81, 106);
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
