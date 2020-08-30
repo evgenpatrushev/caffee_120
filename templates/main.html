@@ -154,13 +154,13 @@
         {% endif %}
         <!-- info -->
         <div class="banner-info wow fadeIn">
-            <a href="menu.html" class="btn main-btn">Our menu</a>
-            <a href="menu.html" class="btn main-btn">Registration</a>
-            <h1>Coffee, the finest organic suspension ever devised. </h1>
+            <a href="/menu" class="btn main-btn">{{menu_str}}</a>
+            <a href="/registration" class="btn main-btn">{{registration_str}}</a>
+            <h1>{{ message_str }}</h1>
 
 
-            <h2>HOURS:
-                <span>Пн-Пт: 7:00 - 19:00</span>
+            <h2>{{HOURS}}:
+                <span>{{interval}}: 7:00 - 19:00</span>
                 {#                <span>Sat-Sun: 8am - 7pm</span>#}
                 <span>вулиця Іллінська, 8, Київ, 02000</span></h2>
             {#            <div class="sociallist-home">#}
