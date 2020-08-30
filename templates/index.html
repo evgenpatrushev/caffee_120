@@ -9,13 +9,21 @@
     <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 
+    <style>
+        body {
+            background-color: rgb(69, 81, 106);
+            color: white;
+        }
+        p {color: white}
+    </style>
+
 </head>
 <body>
 
 
 {% if request.MOBILE %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">COFFEE 120</a>
+        <a class="navbar-brand" href="/">COFFEE 120</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -42,9 +50,8 @@
 {% else %}
     <nav class="navbar navbar-expand-xl bg-dark navbar-dark">
 
-
         <div class="navbar-header">
-            <a class="navbar-brand ml-auto" href="">COFFEE 120</a>
+            <a class="navbar-brand ml-auto" href="/">COFFEE 120</a>
         </div>
 
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">

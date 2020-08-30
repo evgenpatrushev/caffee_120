@@ -32,6 +32,7 @@ def get_reg_form(language):
         age_str = 'Вік'
         telephone_number_str = 'Номер телефона'
         submit_str = 'Відправити'
+        required_message = "* - обов'язкові елементи для заповнення"
 
         validators_DataRequired = 'Будь ласка, введіть поле {}'
         validators_length = '{} повинно бути від {} да {} символів'
@@ -45,6 +46,7 @@ def get_reg_form(language):
         age_str = 'Возраст'
         telephone_number_str = 'Номер телефона'
         submit_str = 'Отправить'
+        required_message = "* - обязательные элементы для заполнения"
 
         validators_DataRequired = 'Введите обязательно поле {}'
         validators_length = '{} необходимо от {} до {} символов'
@@ -58,18 +60,19 @@ def get_reg_form(language):
         age_str = 'Age'
         telephone_number_str = 'Telephone number'
         submit_str = 'Submit'
+        required_message = "* - required fields"
 
         validators_DataRequired = 'Required field {}'
         validators_length = '{} require from {} till {} symbols'
 
         # self.registration_id = HiddenField()
 
-    setattr(RegistrationForm, 'name', StringField(f"{name_str}: ", [
+    setattr(RegistrationForm, 'name', StringField(f"{name_str}: *", [
         validators.InputRequired(validators_DataRequired.format(name_str)),
         validators.Length(3, 255, validators_length.format(name_str, 3, 255))
     ]))
 
-    setattr(RegistrationForm, 'surname', StringField(f"{surname_str}: ", [
+    setattr(RegistrationForm, 'surname', StringField(f"{surname_str}: *", [
         validators.InputRequired(validators_DataRequired.format(surname_str)),
         validators.Length(3, 255, validators_length.format(surname_str, 3, 255))
     ]))
@@ -89,11 +92,13 @@ def get_reg_form(language):
             SelectField(f"{gender_str}: ", choices=[(0, '--'), (1, gender_f), (2, gender_m)], coerce=int,
                         default=0))
 
-    setattr(RegistrationForm, 'telephone_number', StringField(f"{telephone_number_str} : ", [
+    setattr(RegistrationForm, 'telephone_number', StringField(f"{telephone_number_str}: *", [
         # todo add validation for telephone number
         validators.DataRequired(validators_DataRequired.format(telephone_number_str))
     ]))
 
     setattr(RegistrationForm, 'submit', SubmitField(f"{submit_str}"))
+
+    setattr(RegistrationForm, 'required_message', required_message)
 
     return RegistrationForm()
