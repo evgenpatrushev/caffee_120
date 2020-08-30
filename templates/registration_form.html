@@ -4,6 +4,18 @@
 
 {% block content %}
     <!--https://www.codeply.com/go/nhbdi2FkJm-->
+<<<<<<< Updated upstream
+=======
+    <style>
+        .form-control {
+            background-color: #d7d7d7
+        }
+
+        .datepicker {
+            background-color: #d7d7d7
+        }
+    </style>
+>>>>>>> Stashed changes
 
     <br><br>
     <div class="col-md-6 mx-auto">
@@ -15,7 +27,7 @@
             </div>
             <div class="card-body">
 
-                <form class="form" action="/{{ action }}" method=post>
+                <form class="form" action="/{{ action }}" method=post onsubmit="submit.disabled = true; return true;">
                     {{ form.hidden_tag() }}
 
 
@@ -117,11 +129,19 @@
                         {% endif %}
                     </div>
 
-                    {{ form.submit(class_="btn btn-success") }}
+{#                    {{ form.submit(class_="btn btn-success",#}
+{#                            onclick="this.disabled=true;this.value='Sending, please wait...';this.form.submit();#}
+{#                            return false;", type="submit")}}#}
+
+                {{ form.submit(class_="btn btn-success")}}
                 </form>
+                {% if form,required_message %}
+                    <br><br>
+                    <p>{{ form.required_message }}</p>
+                {% endif %}
             </div>
         </div>
-    <br><br><br>
+        <br><br><br>
 
     </div>
 
